@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Download, Search, RefreshCw, Database } from 'lucide-react';
+import { Download, Search, RefreshCw, Database, Save } from 'lucide-react';
 
 // Define types for our provider data
 interface ProviderData {
@@ -20,6 +20,35 @@ interface Providers {
   [key: string]: ProviderData;
 }
 
+interface DataSourceInfo {
+  origin: 'cache' | 'initial' | 'batch2' | 'merged';
+  label: string;
+  sources: string[];
+  fromCache: boolean;
+  savedAt?: string;
+  loadedAt: string;
+}
+
+const ORIGIN_LABELS: Record<DataSourceInfo['origin'], string> = {
+  cache: 'Cache',
+  initial: 'Initial dataset',
+  batch2: 'Batch dataset',
+  merged: 'Merged datasets',
+};
+
+const formatTimestamp = (iso?: string) => {
+  if (!iso) {
+    return '—';
+  }
+
+  const date = new Date(iso);
+  if (Number.isNaN(date.getTime())) {
+    return '—';
+  }
+
+  return date.toLocaleString();
+};
+
 // Extend the Window interface to include our storage
 declare global {
   interface Window {
@@ -36,68 +65,247 @@ export default function AIProvidersDB() {
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
   const [filterType, setFilterType] = useState('all');
+  const [dataSourceInfo, setDataSourceInfo] = useState<DataSourceInfo | null>(null);
 
   useEffect(() => {
     loadData();
   }, []);
 
-  const loadData = async () => {
-    setLoading(true);
-    try {
-      // Check if window.storage is available
-      if (window.storage) {
-        const result = await window.storage.get('ai_providers_data');
-        if (result && result.value) {
-          setProviders(JSON.parse(result.value));
-          setLoading(false);
-          return;
-        }
-      }
-
-      // Load initial data
-      const initialResponse = await fetch('provider-data/initialData.json');
-      const initialData = await initialResponse.json();
-
-      // Load batch2 data - need to fetch and process the JavaScript file
-      const batch2Response = await fetch('provider-data/batch2.json');
-      const batch2Text = await batch2Response.text();
-
-      // Process the JavaScript file to extract the object
-      // Remove the 'const batch2 =' part and handle the object
-      const cleanedText = batch2Text.replace(/const batch2\s*=\s*/, '').trim();
-      const objectStr = cleanedText.replace(/;$/, '').trim(); // Remove trailing semicolon if present
-
-      // Parse the object using JSON.parse after converting JavaScript object syntax to JSON
-      let batch2Data: Providers = {};
-      try {
-        // This approach handles the JavaScript object format by using a Function constructor
-        // which is safer than eval()
-        batch2Data = new Function('return ' + objectStr)();
-      } catch (e) {
-        console.error('Error parsing batch2.json:', e);
-        // If parsing fails, try to load just the initial data
-        await saveData(initialData);
-        return;
-      }
-
-      // Merge both datasets, with batch2 potentially overriding initial data
-      const mergedData: Providers = { ...initialData, ...batch2Data };
-      await saveData(mergedData);
-    } catch (error) {
-      console.error('Error loading data:', error);
+  const attemptLoadFromCache = async (): Promise<boolean> => {
+    if (!window.storage) {
+      return false;
     }
-    setLoading(false);
+
+    try {
+      const result = await window.storage.get('ai_providers_data');
+      if (!result || !result.value) {
+        return false;
+      }
+
+      const cachedData = JSON.parse(result.value) as Providers;
+
+      let storedInfo: DataSourceInfo | null = null;
+      try {
+        const metadataResult = await window.storage.get('ai_providers_metadata');
+        if (metadataResult && metadataResult.value) {
+          storedInfo = JSON.parse(metadataResult.value) as DataSourceInfo;
+        }
+      } catch (metadataError) {
+        console.warn('Unable to parse cached metadata.', metadataError);
+      }
+
+      const loadedAt = new Date().toISOString();
+      const info: DataSourceInfo = storedInfo
+        ? { ...storedInfo, fromCache: true, loadedAt }
+        : {
+          origin: 'cache',
+          label: 'Cached dataset',
+          sources: ['cache'],
+          fromCache: true,
+          savedAt: undefined,
+          loadedAt,
+        };
+
+      setProviders(cachedData);
+      setDataSourceInfo(info);
+      return true;
+    } catch (error) {
+      console.error('Error loading cached data:', error);
+      return false;
+    }
   };
 
-  const saveData = async (newData: Providers) => {
+  const fetchInitialData = async (): Promise<Providers> => {
+    const response = await fetch('provider-data/initialData.json');
+    if (!response.ok) {
+      throw new Error(`Failed to load initialData.json (${response.status})`);
+    }
+    return response.json();
+  };
+
+  const parseBatch2Text = (batch2Text: string): Providers => {
+    const cleanedText = batch2Text.replace(/const batch2\s*=\s*/, '').trim();
+    const objectStr = cleanedText.replace(/;$/, '').trim();
+    return new Function('return ' + objectStr)();
+  };
+
+  const fetchBatch2Data = async (): Promise<Providers> => {
+    const response = await fetch('provider-data/batch2.json');
+    if (!response.ok) {
+      throw new Error(`Failed to load batch2.json (${response.status})`);
+    }
+
+    const text = await response.text();
+    try {
+      return parseBatch2Text(text);
+    } catch (error) {
+      console.error('Error parsing batch2.json:', error);
+      throw new Error('Error parsing batch2.json');
+    }
+  };
+
+  const persistData = async (newData: Providers, info: Omit<DataSourceInfo, 'loadedAt'>) => {
+    const timestamp = new Date().toISOString();
+    const enriched: DataSourceInfo = {
+      ...info,
+      fromCache: false,
+      savedAt: info.savedAt ?? timestamp,
+      loadedAt: timestamp,
+    };
+
     try {
       if (window.storage) {
         await window.storage.set('ai_providers_data', JSON.stringify(newData));
+        await window.storage.set('ai_providers_metadata', JSON.stringify(enriched));
       }
-      setProviders(newData);
     } catch (error) {
       console.error('Error saving data:', error);
     }
+
+    setProviders(newData);
+    setDataSourceInfo(enriched);
+  };
+
+  const loadInitialOnly = async () => {
+    const initialData = await fetchInitialData();
+    await persistData(initialData, {
+      origin: 'initial',
+      label: 'Initial dataset',
+      sources: ['provider-data/initialData.json'],
+      fromCache: false,
+    });
+  };
+
+  const loadBatch2Only = async () => {
+    const batch2Data = await fetchBatch2Data();
+    await persistData(batch2Data, {
+      origin: 'batch2',
+      label: 'Batch dataset',
+      sources: ['provider-data/batch2.json'],
+      fromCache: false,
+    });
+  };
+
+  const loadMergedData = async (): Promise<boolean> => {
+    const initialData = await fetchInitialData();
+
+    try {
+      const batch2Data = await fetchBatch2Data();
+      const mergedData: Providers = { ...initialData, ...batch2Data };
+      await persistData(mergedData, {
+        origin: 'merged',
+        label: 'Merged datasets',
+        sources: ['provider-data/initialData.json', 'provider-data/batch2.json'],
+        fromCache: false,
+      });
+      return true;
+    } catch (error) {
+      console.error('Error loading batch2 data; falling back to initial dataset.', error);
+      await persistData(initialData, {
+        origin: 'initial',
+        label: 'Initial dataset',
+        sources: ['provider-data/initialData.json'],
+        fromCache: false,
+      });
+      return false;
+    }
+  };
+
+  const loadData = async () => {
+    setLoading(true);
+    try {
+      const cacheLoaded = await attemptLoadFromCache();
+      if (!cacheLoaded) {
+        await loadMergedData();
+      }
+    } catch (error) {
+      console.error('Error loading data:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleLoadFromCache = async () => {
+    setLoading(true);
+    try {
+      const cacheLoaded = await attemptLoadFromCache();
+      if (!cacheLoaded) {
+        alert('No cached dataset was found. Load from sources first to populate the cache.');
+      }
+    } catch (error) {
+      console.error('Error loading cached dataset:', error);
+      alert('Unable to load cached dataset. Check console for details.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleLoadInitial = async () => {
+    setLoading(true);
+    try {
+      await loadInitialOnly();
+    } catch (error) {
+      console.error('Error loading initial dataset:', error);
+      alert('Failed to load initialData.json. See console for details.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleLoadBatch2 = async () => {
+    setLoading(true);
+    try {
+      await loadBatch2Only();
+    } catch (error) {
+      console.error('Error loading batch2 dataset:', error);
+      alert('Failed to load batch2.json. See console for details.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleLoadAllSources = async () => {
+    setLoading(true);
+    try {
+      const success = await loadMergedData();
+      if (!success) {
+        alert('Loaded initial dataset only. Batch2 data could not be parsed. See console for details.');
+      }
+    } catch (error) {
+      console.error('Error loading all sources:', error);
+      alert('Failed to load sources. See console for details.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleSaveSnapshot = () => {
+    const payload = {
+      generatedAt: new Date().toISOString(),
+      metadata: dataSourceInfo,
+      providers,
+    };
+
+    const defaultName = `ai_providers_snapshot_${new Date().toISOString().replace(/[.:]/g, '-').replace('T', '_').split('Z')[0]}.json`;
+    const inputName = prompt('Save snapshot as (filename):', defaultName);
+    if (!inputName) {
+      return;
+    }
+
+    const trimmed = inputName.trim();
+    if (!trimmed) {
+      return;
+    }
+
+    const fileName = trimmed.endsWith('.json') ? trimmed : `${trimmed}.json`;
+
+    const blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const anchor = document.createElement('a');
+    anchor.href = url;
+    anchor.download = fileName;
+    anchor.click();
+    URL.revokeObjectURL(url);
   };
 
   const exportJSON = () => {
@@ -135,17 +343,25 @@ export default function AIProvidersDB() {
   };
 
   const copyToClipboard = () => {
-    const text = JSON.stringify(providers, null, 2);
-    navigator.clipboard.writeText(text);
-    alert('Copied to clipboard!');
+    const payload = {
+      metadata: dataSourceInfo,
+      providers,
+    };
+
+    const text = JSON.stringify(payload, null, 2);
+    navigator.clipboard.writeText(text)
+      .then(() => alert('Copied dataset and metadata to clipboard!'))
+      .catch(() => alert('Unable to copy to clipboard.'));
   };
 
   const clearData = async () => {
     if (confirm('Clear all data? This cannot be undone.')) {
       if (window.storage) {
         await window.storage.delete('ai_providers_data');
+        await window.storage.delete('ai_providers_metadata');
       }
       setProviders({});
+      setDataSourceInfo(null);
     }
   };
 
@@ -164,6 +380,10 @@ export default function AIProvidersDB() {
   });
 
   const totalProviders = providerEntries.length;
+  const originDescriptor = dataSourceInfo ? ORIGIN_LABELS[dataSourceInfo.origin] : 'No dataset loaded';
+  const sourcesSummary = dataSourceInfo && dataSourceInfo.sources.length > 0
+    ? dataSourceInfo.sources.join(', ')
+    : '—';
 
   if (loading) {
     return (
@@ -231,6 +451,10 @@ export default function AIProvidersDB() {
             <button onClick={copyToClipboard} className="action-button copy">
               Copy
             </button>
+            <button onClick={handleSaveSnapshot} className="action-button save">
+              <Save size={16} />
+              Save Snapshot
+            </button>
             <button onClick={clearData} className="action-button clear">
               Clear
             </button>
@@ -245,6 +469,61 @@ export default function AIProvidersDB() {
           <p className="stats-meta">
             {totalProviders} providers indexed | {filteredProviders.length} matching filters
           </p>
+        </div>
+      </section>
+
+
+      <section className="source-card">
+        <div className="source-info">
+          <span className="source-label">Current dataset</span>
+          <h3 className="source-value">{originDescriptor}</h3>
+
+          <div className="source-meta">
+            {dataSourceInfo ? (
+              <>
+                <span className={`source-chip ${dataSourceInfo.fromCache ? 'cache' : 'fresh'}`}>
+                  {dataSourceInfo.fromCache ? 'Cache hit' : 'Fresh load'}
+                </span>
+                <span className="source-chip neutral">
+                  {dataSourceInfo.sources.length} source{dataSourceInfo.sources.length === 1 ? '' : 's'}
+                </span>
+              </>
+            ) : (
+              <span className="source-chip neutral">No dataset loaded</span>
+            )}
+          </div>
+
+          <dl className="source-details">
+            <div>
+              <dt>Sources</dt>
+              <dd>{sourcesSummary}</dd>
+            </div>
+            <div>
+              <dt>Saved</dt>
+              <dd>{formatTimestamp(dataSourceInfo?.savedAt)}</dd>
+            </div>
+            <div>
+              <dt>Loaded</dt>
+              <dd>{formatTimestamp(dataSourceInfo?.loadedAt)}</dd>
+            </div>
+          </dl>
+        </div>
+
+        <div className="source-actions">
+          <div className="button-group">
+            <button className="ghost-button" onClick={handleLoadFromCache}>
+              Load Cache
+            </button>
+            <button className="ghost-button" onClick={handleLoadInitial}>
+              Load Initial
+            </button>
+            <button className="ghost-button" onClick={handleLoadBatch2}>
+              Load Batch 2
+            </button>
+            <button className="ghost-button primary" onClick={handleLoadAllSources}>
+              Load All Sources
+            </button>
+          </div>
         </div>
       </section>
 
