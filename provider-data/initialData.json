@@ -1,0 +1,249 @@
+{
+  "Google Gemini": {
+    "website": "https://ai.google.dev/",
+    "client_types": ["Web", "API", "SDK"],
+    "free_tier": {
+      "limits": "15 RPM, 1M tokens/min, 1500 requests/day",
+      "models": ["Gemini 1.5 Flash", "Gemini 1.5 Flash-8B", "Gemini 1.0 Pro"]
+    },
+    "paid_tier": {
+      "limits": "Pay-as-you-go: 2000 RPM for Flash, 1000 RPM for Pro",
+      "models": ["Gemini 1.5 Pro", "Gemini 1.5 Flash", "Gemini 1.0 Pro"]
+    },
+    "notes": "Free tier includes 2M context window. Text Embedding also free up to 1500 req/day"
+  },
+  "Anthropic Claude": {
+    "website": "https://www.anthropic.com/",
+    "client_types": ["Web", "API", "SDK", "Desktop"],
+    "free_tier": {
+      "limits": "Web: Limited messages/day on claude.ai. No free API tier",
+      "models": ["Claude 3.5 Sonnet", "Claude 3 Opus", "Claude 3 Haiku"]
+    },
+    "paid_tier": {
+      "limits": "API: Pay per token. Pro: $20/mo for 5x limits. Team: $25-30/user/mo",
+      "models": ["Claude 3.5 Sonnet", "Claude 3 Opus", "Claude 3 Haiku"]
+    },
+    "notes": "Free web chat available. API requires payment. Desktop app available"
+  },
+  "OpenAI": {
+    "website": "https://platform.openai.com/",
+    "client_types": ["Web", "API", "SDK"],
+    "free_tier": {
+      "limits": "ChatGPT: Free tier with GPT-3.5. API: $5 credit for new accounts",
+      "models": ["GPT-3.5 Turbo", "GPT-4o-mini (web)", "DALL-E 2"]
+    },
+    "paid_tier": {
+      "limits": "ChatGPT Plus: $20/mo. API: Pay per token with rate limits by tier",
+      "models": ["GPT-4", "GPT-4 Turbo", "GPT-4o", "O1", "O1-mini", "DALL-E 3"]
+    },
+    "notes": "Free ChatGPT includes limited GPT-4o access. API pricing varies by model"
+  },
+  "xAI Grok": {
+    "website": "https://x.ai/",
+    "client_types": ["Web", "API"],
+    "free_tier": {
+      "limits": "Limited free access via X Premium ($8-16/mo required)",
+      "models": ["Grok-2", "Grok-2-mini"]
+    },
+    "paid_tier": {
+      "limits": "API: Pay per token. X Premium+ for higher limits",
+      "models": ["Grok-2", "Grok-2-mini", "Grok-vision"]
+    },
+    "notes": "Requires X (Twitter) Premium subscription for access"
+  },
+  "Sourcegraph Cody": {
+    "website": "https://sourcegraph.com/cody",
+    "client_types": ["IDE Extension", "CLI", "Web"],
+    "free_tier": {
+      "limits": "Free: Unlimited autocompletions, 20 chats & commands/month",
+      "models": ["Claude 3.5 Sonnet", "GPT-4o", "Gemini 1.5"]
+    },
+    "paid_tier": {
+      "limits": "Pro: $9/user/mo - Unlimited. Enterprise: Custom pricing",
+      "models": ["Claude 3.5 Sonnet", "GPT-4o", "Gemini 1.5 Pro", "Custom models"]
+    },
+    "notes": "VS Code, JetBrains, Neovim extensions. Context-aware code AI"
+  },
+  "Warp AI": {
+    "website": "https://www.warp.dev/",
+    "client_types": ["Terminal", "Desktop"],
+    "free_tier": {
+      "limits": "Free tier with limited AI requests per month",
+      "models": ["GPT-4 (via Warp AI)"]
+    },
+    "paid_tier": {
+      "limits": "Team: $10/user/mo - Unlimited AI, collaboration features",
+      "models": ["GPT-4", "Custom model support"]
+    },
+    "notes": "AI-powered terminal for MacOS/Linux. Command search, explanations"
+  },
+  "Augment": {
+    "website": "https://www.augmentcode.com/",
+    "client_types": ["IDE Extension"],
+    "free_tier": {
+      "limits": "14-day free trial, then subscription required",
+      "models": ["Proprietary Augment models"]
+    },
+    "paid_tier": {
+      "limits": "$50/user/mo - Enterprise features and unlimited usage",
+      "models": ["Augment Code AI models"]
+    },
+    "notes": "VS Code extension. Code completion, refactoring, documentation"
+  },
+  "Perplexity AI": {
+    "website": "https://www.perplexity.ai/",
+    "client_types": ["Web", "Mobile App", "API"],
+    "free_tier": {
+      "limits": "Free: Limited searches per day with standard AI",
+      "models": ["Standard (GPT-3.5 based)", "Quick searches"]
+    },
+    "paid_tier": {
+      "limits": "Pro: $20/mo - 300+ Pro searches/day, unlimited Quick",
+      "models": ["GPT-4", "Claude 3", "Gemini Pro", "Perplexity models"]
+    },
+    "notes": "AI search engine. API in beta. Mobile apps available"
+  },
+  "Moonshot Kimi": {
+    "website": "https://kimi.moonshot.cn/ and https://platform.moonshot.ai/",
+    "client_types": ["Web", "API", "SDK", "Mobile App"],
+    "free_tier": {
+      "limits": "Unlimited basic access with 2M character context, 10 docs/day, queuing during peak",
+      "models": ["Kimi K2 (1T params, 32B active)", "Kimi K1.5"]
+    },
+    "paid_tier": {
+      "limits": "Pro: ~$7/mo, Ultra: ~$49/mo (70M tokens). API: $0.15/M input, $2.50/M output",
+      "models": ["Kimi K2", "Kimi K2 Thinking", "Full API access"]
+    },
+    "notes": "Chinese 'ChatGPT'. Massive 2M char context. Open-source K2 under Apache 2.0. Ultra-competitive pricing"
+  },
+  "Alibaba Qwen": {
+    "website": "https://www.alibabacloud.com/product/ai and https://qwen.ai/",
+    "client_types": ["Web", "API", "SDK"],
+    "free_tier": {
+      "limits": "Free tier in Singapore region only. Limited quota. Via OpenRouter: free tier available",
+      "models": ["Qwen-Turbo", "Qwen-Flash", "Qwen 3 (0.6B-235B via OpenRouter)"]
+    },
+    "paid_tier": {
+      "limits": "Qwen-Max: ~$1.26/M input, $6.30/M output. Qwen-Plus: $0.42/M, $1.26/M. Turbo: $0.05/M, $0.21/M",
+      "models": ["Qwen-Max", "Qwen-Plus", "Qwen-Turbo", "Qwen3-Coder", "QwQ-32B (reasoning)"]
+    },
+    "notes": "Alibaba's family. Open-source models. 128K-1M context. Thinking mode available. Very competitive pricing"
+  },
+  "DeepSeek": {
+    "website": "https://www.deepseek.com/ and https://chat.deepseek.com/",
+    "client_types": ["Web", "API", "SDK"],
+    "free_tier": {
+      "limits": "Free web chat (unlimited with throttling). Promotional API credits for new users",
+      "models": ["DeepSeek-V3.2-Exp", "DeepSeek-Chat"]
+    },
+    "paid_tier": {
+      "limits": "API: $0.028/M (cache hit), $0.28/M input, $0.42/M output. 50-75% off-peak discount",
+      "models": ["DeepSeek-V3.2-Exp", "DeepSeek-Chat", "DeepSeek-Reasoner (R1)"]
+    },
+    "notes": "Extremely cheap! ~90% cheaper than OpenAI. 128K context. Open-source. MIT license. Chinese company"
+  },
+  "Mistral AI": {
+    "website": "https://mistral.ai/ and https://console.mistral.ai/",
+    "client_types": ["Web (Le Chat)", "API", "SDK"],
+    "free_tier": {
+      "limits": "Le Chat: Free with ~25 msgs, Flash answers, docs. API: Free tier for prototyping",
+      "models": ["Mistral Small", "Mistral NeMo 12B", "Pixtral 12B (vision)"]
+    },
+    "paid_tier": {
+      "limits": "Pro: $15/mo. API: Medium 3 ~$0.10/M, Large ~$2/M input. Codestral competitive",
+      "models": ["Mistral Large 2", "Mistral Medium 3", "Codestral", "Pixtral 12B"]
+    },
+    "notes": "European (French). Apache 2.0 open models. Zero-retention option. Very competitive pricing"
+  },
+  "Cohere": {
+    "website": "https://cohere.com/ and https://dashboard.cohere.com/",
+    "client_types": ["API", "SDK"],
+    "free_tier": {
+      "limits": "Trial API key: 5K generation units/mo, 100 calls/min. Free for prototyping. 1K calls/mo total",
+      "models": ["Command R", "Embed v3", "Rerank 3.5"]
+    },
+    "paid_tier": {
+      "limits": "Production (pay-as-you-go): Command A: $2.50/M in, $10/M out. Command R: $0.15/M, $0.60/M",
+      "models": ["Command A (newest)", "Command R+", "Command R", "Command R7B", "Embed 4", "Rerank 3.5"]
+    },
+    "notes": "Enterprise-focused. Strong embeddings/rerank. OpenAI-compatible API. Custom models available"
+  },
+  "Cursor": {
+    "website": "https://cursor.com/",
+    "client_types": ["Desktop IDE"],
+    "free_tier": {
+      "limits": "Hobby: 2K completions/mo, 50 premium requests. 2-week Pro trial",
+      "models": ["GPT-4.1", "Claude Sonnet", "Gemini 2.0 (base models only)"]
+    },
+    "paid_tier": {
+      "limits": "Pro: $20/mo ($20 API credit). Pro+: $60/mo (1500 reqs). Ultra: $200/mo (20x usage)",
+      "models": ["GPT-4.1", "Claude Opus 4", "Gemini 2.5 Pro", "OpenAI o3", "Cursor Composer"]
+    },
+    "notes": "AI-first code editor. Fork of VS Code. Multi-model support. Composer for multi-file edits. Pricing controversies"
+  },
+  "GitHub Copilot": {
+    "website": "https://github.com/features/copilot",
+    "client_types": ["IDE Extension", "CLI", "Mobile"],
+    "free_tier": {
+      "limits": "Free: 2K completions/mo, 50 premium reqs. Free for students/teachers/OSS maintainers",
+      "models": ["GPT-4.1", "o3-mini", "Gemini 2.0"]
+    },
+    "paid_tier": {
+      "limits": "Pro: $10/mo (300 premium). Pro+: $39/mo (1500 reqs). Business: $19/user. Enterprise: $39/user",
+      "models": ["GPT-4.1", "Claude 3.7 Sonnet", "Gemini 2.5 Pro", "OpenAI o1", "o3"]
+    },
+    "notes": "Microsoft-owned. Best IDE integration. VS Code, JetBrains, etc. Chat in Business+. Popular with enterprises"
+  },
+  "Meta Llama": {
+    "website": "https://ai.meta.com/llama/",
+    "client_types": ["API", "SDK", "Self-hosted"],
+    "free_tier": {
+      "limits": "Open source, free to use. Pricing depends on hosting provider.",
+      "models": ["Llama 3.1", "Llama 3", "Llama 2"]
+    },
+    "paid_tier": {
+      "limits": "Varies by provider (e.g., AWS, Replicate, Groq). Pay-per-use.",
+      "models": ["Llama 3.1", "Llama 3", "Llama 2"]
+    },
+    "notes": "Open source models from Meta. Can be self-hosted or used via cloud providers."
+  },
+  "IBM Watsonx": {
+    "website": "https://www.ibm.com/watsonx",
+    "client_types": ["API", "SDK", "Cloud Platform"],
+    "free_tier": {
+      "limits": "Free tier with monthly token and compute hour limits.",
+      "models": ["Granite", "Slate", "other open source models"]
+    },
+    "paid_tier": {
+      "limits": "Pay-as-you-go per million tokens. Subscription plans available.",
+      "models": ["Granite", "Slate", "other open source models"]
+    },
+    "notes": "Enterprise-focused AI and data platform. Offers a suite of tools for building, scaling, and governing AI."
+  },
+  "AI21 Labs Jurassic": {
+    "website": "https://www.ai21.com/",
+    "client_types": ["API", "SDK"],
+    "free_tier": {
+      "limits": "$10 credit for new users, valid for 3 months.",
+      "models": ["Jurassic-2 Mid", "Jurassic-2 Ultra"]
+    },
+    "paid_tier": {
+      "limits": "Pay-as-you-go per token. J2-Mid: $12.5/M tokens, J2-Ultra: $18.8/M tokens.",
+      "models": ["Jurassic-2 Mid", "Jurassic-2 Ultra"]
+    },
+    "notes": "Focus on production-grade NLP APIs."
+  },
+  "Hugging Face": {
+    "website": "https://huggingface.co/",
+    "client_types": ["Web", "API", "SDK", "Spaces"],
+    "free_tier": {
+      "limits": "Free access to models and datasets. Free tier for Spaces.",
+      "models": ["Vast collection of open source models"]
+    },
+    "paid_tier": {
+      "limits": "PRO account ($9/mo), Team plan ($20/user/mo), Enterprise Hub (from $50/user/mo). Pay-as-you-go for compute.",
+      "models": ["Vast collection of open source models"]
+    },
+    "notes": "Platform for hosting and collaborating on ML models, datasets, and applications."
+  }
+}
