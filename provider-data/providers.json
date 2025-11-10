@@ -1,0 +1,1027 @@
+{
+    "schemaVersion": 1,
+    "generatedAt": "2025-11-09T00:00:00.000Z",
+    "capabilityTaxonomyVersion": "2025-11-09",
+    "providers": [
+        {
+            "name": "Google Gemini",
+            "slug": "google-gemini",
+            "website": "https://ai.google.dev/",
+            "capabilities": [
+                "web_app",
+                "api",
+                "sdk"
+            ],
+            "freeTier": {
+                "limits": "15 RPM, 1M tokens/min, 1500 requests/day",
+                "models": [
+                    "Gemini 1.5 Flash",
+                    "Gemini 1.5 Flash-8B",
+                    "Gemini 1.0 Pro"
+                ]
+            },
+            "paidTier": {
+                "limits": "Pay-as-you-go: 2000 RPM for Flash, 1000 RPM for Pro",
+                "models": [
+                    "Gemini 1.5 Pro",
+                    "Gemini 1.5 Flash",
+                    "Gemini 1.0 Pro"
+                ]
+            },
+            "notes": "Free tier includes 2M context window. Text Embedding also free up to 1500 req/day",
+            "openAICompatible": {
+                "isCompatible": false
+            },
+            "models": [
+                {
+                    "name": "Gemini 1.5 Pro",
+                    "availability": "paid",
+                    "pricing": {
+                        "unit": "per_token",
+                        "inputCost": "$0.000625 / 1K tokens",
+                        "outputCost": "$0.00125 / 1K tokens",
+                        "notes": "Google AI Studio pricing (Apr 2025)"
+                    }
+                },
+                {
+                    "name": "Gemini 1.5 Flash",
+                    "availability": "both",
+                    "pricing": {
+                        "unit": "per_token",
+                        "inputCost": "$0.000075 / 1K tokens",
+                        "outputCost": "$0.00030 / 1K tokens",
+                        "notes": "Generous free tier before usage-based billing engages"
+                    }
+                },
+                {
+                    "name": "Gemini 1.5 Flash-8B",
+                    "availability": "free",
+                    "pricing": {
+                        "unit": "per_token",
+                        "notes": "Included in free tier quotas"
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Anthropic Claude",
+            "slug": "anthropic-claude",
+            "website": "https://www.anthropic.com/",
+            "capabilities": [
+                "web_app",
+                "api",
+                "sdk",
+                "desktop"
+            ],
+            "freeTier": {
+                "limits": "Web: Limited messages/day on claude.ai. No free API tier",
+                "models": [
+                    "Claude 3.5 Sonnet",
+                    "Claude 3 Opus",
+                    "Claude 3 Haiku"
+                ]
+            },
+            "paidTier": {
+                "limits": "API: Pay per token. Pro: $20/mo for 5x limits. Team: $25-30/user/mo",
+                "models": [
+                    "Claude 3.5 Sonnet",
+                    "Claude 3 Opus",
+                    "Claude 3 Haiku"
+                ]
+            },
+            "notes": "Free web chat available. API requires payment. Desktop app available",
+            "openAICompatible": {
+                "isCompatible": false
+            },
+            "models": [
+                {
+                    "name": "Claude 3.5 Sonnet",
+                    "availability": "both",
+                    "pricing": {
+                        "unit": "per_token",
+                        "inputCost": "$0.0008 / 1K tokens",
+                        "outputCost": "$0.0032 / 1K tokens"
+                    }
+                },
+                {
+                    "name": "Claude 3 Opus",
+                    "availability": "paid",
+                    "pricing": {
+                        "unit": "per_token",
+                        "inputCost": "$0.003 / 1K tokens",
+                        "outputCost": "$0.015 / 1K tokens"
+                    }
+                },
+                {
+                    "name": "Claude 3 Haiku",
+                    "availability": "free",
+                    "pricing": {
+                        "unit": "per_token",
+                        "notes": "Available on claude.ai without charge"
+                    }
+                }
+            ]
+        },
+        {
+            "name": "OpenAI",
+            "slug": "openai",
+            "website": "https://platform.openai.com/",
+            "capabilities": [
+                "web_app",
+                "api",
+                "sdk"
+            ],
+            "freeTier": {
+                "limits": "ChatGPT: Free tier with GPT-3.5. API: $5 credit for new accounts",
+                "models": [
+                    "GPT-3.5 Turbo",
+                    "GPT-4o-mini",
+                    "DALL-E 2"
+                ]
+            },
+            "paidTier": {
+                "limits": "ChatGPT Plus: $20/mo. API: Pay per token with rate limits by tier",
+                "models": [
+                    "GPT-4o",
+                    "GPT-4o-mini",
+                    "o1",
+                    "o1-mini",
+                    "DALL-E 3"
+                ]
+            },
+            "notes": "Free ChatGPT includes limited GPT-4o access. API pricing varies by model",
+            "openAICompatible": {
+                "isCompatible": true,
+                "apiKeyPortal": "https://platform.openai.com/signup",
+                "endpointDocs": "https://platform.openai.com/docs/api-reference",
+                "supportedModels": [
+                    "gpt-4o",
+                    "gpt-4o-mini",
+                    "o1",
+                    "o1-mini",
+                    "gpt-3.5-turbo"
+                ]
+            },
+            "models": [
+                {
+                    "name": "GPT-4o",
+                    "availability": "paid",
+                    "pricing": {
+                        "unit": "per_token",
+                        "inputCost": "$0.005 / 1K tokens",
+                        "outputCost": "$0.015 / 1K tokens"
+                    }
+                },
+                {
+                    "name": "GPT-4o-mini",
+                    "availability": "both",
+                    "pricing": {
+                        "unit": "per_token",
+                        "inputCost": "$0.00015 / 1K tokens",
+                        "outputCost": "$0.00060 / 1K tokens"
+                    }
+                },
+                {
+                    "name": "o1",
+                    "availability": "paid",
+                    "pricing": {
+                        "unit": "per_token",
+                        "inputCost": "$0.015 / 1K tokens",
+                        "outputCost": "$0.060 / 1K tokens"
+                    }
+                }
+            ]
+        },
+        {
+            "name": "xAI Grok",
+            "slug": "xai-grok",
+            "website": "https://x.ai/",
+            "capabilities": [
+                "web_app",
+                "api"
+            ],
+            "freeTier": {
+                "limits": "Limited free access via X Premium ($8-16/mo required)",
+                "models": [
+                    "Grok-2",
+                    "Grok-2-mini"
+                ]
+            },
+            "paidTier": {
+                "limits": "API: Pay per token. X Premium+ for higher limits",
+                "models": [
+                    "Grok-2",
+                    "Grok-2-mini",
+                    "Grok-vision"
+                ]
+            },
+            "notes": "Requires X (Twitter) Premium subscription for access",
+            "openAICompatible": {
+                "isCompatible": false
+            },
+            "models": [
+                {
+                    "name": "Grok-2",
+                    "availability": "paid",
+                    "pricing": {
+                        "unit": "per_token",
+                        "notes": "Token pricing not publicly disclosed; billed via X Premium"
+                    }
+                },
+                {
+                    "name": "Grok-2-mini",
+                    "availability": "both",
+                    "pricing": {
+                        "unit": "subscription",
+                        "monthlyCost": "$8+",
+                        "notes": "Included with X Premium subscription tiers"
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Sourcegraph Cody",
+            "slug": "sourcegraph-cody",
+            "website": "https://sourcegraph.com/cody",
+            "capabilities": [
+                "ide",
+                "cli",
+                "web_app"
+            ],
+            "freeTier": {
+                "limits": "Free: Unlimited autocompletions, 20 chats & commands/month",
+                "models": [
+                    "Claude 3.5 Sonnet",
+                    "GPT-4o",
+                    "Gemini 1.5"
+                ]
+            },
+            "paidTier": {
+                "limits": "Pro: $9/user/mo - Unlimited. Enterprise: Custom pricing",
+                "models": [
+                    "Claude 3.5 Sonnet",
+                    "GPT-4o",
+                    "Gemini 1.5 Pro",
+                    "Custom models"
+                ]
+            },
+            "notes": "VS Code, JetBrains, Neovim extensions. Context-aware code AI",
+            "openAICompatible": {
+                "isCompatible": false
+            },
+            "models": [
+                {
+                    "name": "Cody Pro Ensemble",
+                    "availability": "paid",
+                    "pricing": {
+                        "unit": "subscription",
+                        "monthlyCost": "$9 per user",
+                        "notes": "Unlimited usage for individuals"
+                    }
+                },
+                {
+                    "name": "Cody Enterprise",
+                    "availability": "paid",
+                    "pricing": {
+                        "unit": "subscription",
+                        "notes": "Custom pricing based on seat count"
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Warp AI",
+            "slug": "warp-ai",
+            "website": "https://www.warp.dev/",
+            "capabilities": [
+                "cli",
+                "desktop"
+            ],
+            "freeTier": {
+                "limits": "Free tier with limited AI requests per month",
+                "models": [
+                    "GPT-4 (via Warp AI)"
+                ]
+            },
+            "paidTier": {
+                "limits": "Team: $10/user/mo - Unlimited AI, collaboration features",
+                "models": [
+                    "GPT-4",
+                    "Custom model support"
+                ]
+            },
+            "notes": "AI-powered terminal for MacOS/Linux. Command search, explanations",
+            "openAICompatible": {
+                "isCompatible": false
+            },
+            "models": [
+                {
+                    "name": "Warp AI",
+                    "availability": "both",
+                    "pricing": {
+                        "unit": "subscription",
+                        "monthlyCost": "$10 per user",
+                        "notes": "Free tier includes limited prompts"
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Augment",
+            "slug": "augment",
+            "website": "https://www.augmentcode.com/",
+            "capabilities": [
+                "ide"
+            ],
+            "freeTier": {
+                "limits": "14-day free trial, then subscription required",
+                "models": [
+                    "Proprietary Augment models"
+                ]
+            },
+            "paidTier": {
+                "limits": "$50/user/mo - Enterprise features and unlimited usage",
+                "models": [
+                    "Augment Code AI models"
+                ]
+            },
+            "notes": "VS Code extension. Code completion, refactoring, documentation",
+            "openAICompatible": {
+                "isCompatible": false
+            },
+            "models": [
+                {
+                    "name": "Augment Workspace",
+                    "availability": "paid",
+                    "pricing": {
+                        "unit": "subscription",
+                        "monthlyCost": "$50 per user",
+                        "notes": "Includes enterprise administration"
+                    }
+                },
+                {
+                    "name": "Augment Trial",
+                    "availability": "free",
+                    "pricing": {
+                        "unit": "flat",
+                        "notes": "14-day evaluation with limited usage"
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Perplexity AI",
+            "slug": "perplexity-ai",
+            "website": "https://www.perplexity.ai/",
+            "capabilities": [
+                "web_app",
+                "mobile",
+                "api"
+            ],
+            "freeTier": {
+                "limits": "Free: Limited searches per day with standard AI",
+                "models": [
+                    "Standard (GPT-3.5 based)",
+                    "Quick searches"
+                ]
+            },
+            "paidTier": {
+                "limits": "Pro: $20/mo - 300+ Pro searches/day, unlimited Quick",
+                "models": [
+                    "GPT-4",
+                    "Claude 3",
+                    "Gemini Pro",
+                    "Perplexity models"
+                ]
+            },
+            "notes": "AI search engine. API in beta. Mobile apps available",
+            "openAICompatible": {
+                "isCompatible": false
+            },
+            "models": [
+                {
+                    "name": "Perplexity Pro Search",
+                    "availability": "paid",
+                    "pricing": {
+                        "unit": "subscription",
+                        "monthlyCost": "$20",
+                        "notes": "Includes API beta access"
+                    }
+                },
+                {
+                    "name": "Perplexity Quick",
+                    "availability": "free",
+                    "pricing": {
+                        "unit": "flat",
+                        "notes": "Free tier with daily limits"
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Moonshot Kimi",
+            "slug": "moonshot-kimi",
+            "website": "https://kimi.moonshot.cn/",
+            "capabilities": [
+                "web_app",
+                "api",
+                "sdk",
+                "mobile"
+            ],
+            "freeTier": {
+                "limits": "Unlimited basic access with 2M character context, 10 docs/day, queuing during peak",
+                "models": [
+                    "Kimi K2",
+                    "Kimi K1.5"
+                ]
+            },
+            "paidTier": {
+                "limits": "Pro: ~$7/mo, Ultra: ~$49/mo (70M tokens). API: $0.15/M input, $2.50/M output",
+                "models": [
+                    "Kimi K2",
+                    "Kimi K2 Thinking",
+                    "Full API access"
+                ]
+            },
+            "notes": "Chinese 'ChatGPT'. Massive 2M char context. Open-source K2 under Apache 2.0. Ultra-competitive pricing",
+            "openAICompatible": {
+                "isCompatible": false
+            },
+            "models": [
+                {
+                    "name": "Kimi K2",
+                    "availability": "both",
+                    "pricing": {
+                        "unit": "per_token",
+                        "inputCost": "$0.00015 / 1K characters",
+                        "outputCost": "$0.0025 / 1K characters"
+                    }
+                },
+                {
+                    "name": "Kimi K2 Thinking",
+                    "availability": "paid",
+                    "pricing": {
+                        "unit": "per_token",
+                        "inputCost": "$0.00060 / 1K characters",
+                        "outputCost": "$0.0060 / 1K characters"
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Alibaba Qwen",
+            "slug": "alibaba-qwen",
+            "website": "https://qwen.ai/",
+            "capabilities": [
+                "web_app",
+                "api",
+                "sdk"
+            ],
+            "freeTier": {
+                "limits": "Free tier in Singapore region only. Limited quota. Via OpenRouter: free tier available",
+                "models": [
+                    "Qwen-Turbo",
+                    "Qwen-Flash",
+                    "Qwen 3"
+                ]
+            },
+            "paidTier": {
+                "limits": "Qwen-Max: ~$1.26/M input, $6.30/M output. Qwen-Plus: $0.42/M, $1.26/M. Turbo: $0.05/M, $0.21/M",
+                "models": [
+                    "Qwen-Max",
+                    "Qwen-Plus",
+                    "Qwen-Turbo",
+                    "Qwen3-Coder",
+                    "QwQ-32B"
+                ]
+            },
+            "notes": "Alibaba's family. Open-source models. 128K-1M context. Thinking mode available. Very competitive pricing",
+            "openAICompatible": {
+                "isCompatible": true,
+                "apiKeyPortal": "https://dashscope.console.aliyun.com/",
+                "endpointDocs": "https://help.aliyun.com/zh/dashscope/developer-reference/openai-compatibility",
+                "supportedModels": [
+                    "qwen-plus",
+                    "qwen-max",
+                    "qwen-turbo"
+                ]
+            },
+            "models": [
+                {
+                    "name": "Qwen-Plus",
+                    "availability": "paid",
+                    "pricing": {
+                        "unit": "per_token",
+                        "inputCost": "$0.00042 / 1K tokens",
+                        "outputCost": "$0.00126 / 1K tokens"
+                    }
+                },
+                {
+                    "name": "Qwen-Turbo",
+                    "availability": "both",
+                    "pricing": {
+                        "unit": "per_token",
+                        "inputCost": "$0.00005 / 1K tokens",
+                        "outputCost": "$0.00021 / 1K tokens",
+                        "notes": "Free-tier quotas via DashScope"
+                    }
+                },
+                {
+                    "name": "QwQ-32B",
+                    "availability": "paid",
+                    "pricing": {
+                        "unit": "per_token",
+                        "inputCost": "$0.0015 / 1K tokens",
+                        "outputCost": "$0.0045 / 1K tokens"
+                    }
+                }
+            ]
+        },
+        {
+            "name": "DeepSeek",
+            "slug": "deepseek",
+            "website": "https://www.deepseek.com/",
+            "capabilities": [
+                "web_app",
+                "api",
+                "sdk"
+            ],
+            "freeTier": {
+                "limits": "Free web chat (unlimited with throttling). Promotional API credits for new users",
+                "models": [
+                    "DeepSeek-V3.2-Exp",
+                    "DeepSeek-Chat"
+                ]
+            },
+            "paidTier": {
+                "limits": "API: $0.028/M (cache hit), $0.28/M input, $0.42/M output. 50-75% off-peak discount",
+                "models": [
+                    "DeepSeek-V3.2-Exp",
+                    "DeepSeek-Chat",
+                    "DeepSeek-Reasoner"
+                ]
+            },
+            "notes": "Extremely cheap! ~90% cheaper than OpenAI. 128K context. Open-source. MIT license. Chinese company",
+            "openAICompatible": {
+                "isCompatible": true,
+                "apiKeyPortal": "https://platform.deepseek.com/",
+                "endpointDocs": "https://platform.deepseek.com/api-docs/openai",
+                "supportedModels": [
+                    "deepseek-chat",
+                    "deepseek-reasoner"
+                ]
+            },
+            "models": [
+                {
+                    "name": "DeepSeek-Chat",
+                    "availability": "both",
+                    "pricing": {
+                        "unit": "per_token",
+                        "inputCost": "$0.00014 / 1K tokens",
+                        "outputCost": "$0.00028 / 1K tokens"
+                    }
+                },
+                {
+                    "name": "DeepSeek-Reasoner",
+                    "availability": "paid",
+                    "pricing": {
+                        "unit": "per_token",
+                        "inputCost": "$0.00055 / 1K tokens",
+                        "outputCost": "$0.00110 / 1K tokens"
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Mistral AI",
+            "slug": "mistral-ai",
+            "website": "https://mistral.ai/",
+            "capabilities": [
+                "web_app",
+                "api",
+                "sdk"
+            ],
+            "freeTier": {
+                "limits": "Le Chat: Free with ~25 msgs, Flash answers, docs. API: Free tier for prototyping",
+                "models": [
+                    "Mistral Small",
+                    "Mistral NeMo 12B",
+                    "Pixtral 12B"
+                ]
+            },
+            "paidTier": {
+                "limits": "Pro: $15/mo. API: Medium 3 ~$0.10/M, Large ~$2/M input. Codestral competitive",
+                "models": [
+                    "Mistral Large 2",
+                    "Mistral Medium 3",
+                    "Codestral",
+                    "Pixtral 12B"
+                ]
+            },
+            "notes": "European (French). Apache 2.0 open models. Zero-retention option. Very competitive pricing",
+            "openAICompatible": {
+                "isCompatible": true,
+                "apiKeyPortal": "https://console.mistral.ai/",
+                "endpointDocs": "https://docs.mistral.ai/api/openai",
+                "supportedModels": [
+                    "mistral-large-2",
+                    "mistral-medium",
+                    "codestral-latest"
+                ]
+            },
+            "models": [
+                {
+                    "name": "Mistral Large 2",
+                    "availability": "paid",
+                    "pricing": {
+                        "unit": "per_token",
+                        "inputCost": "$0.002 / 1K tokens",
+                        "outputCost": "$0.006 / 1K tokens"
+                    }
+                },
+                {
+                    "name": "Mistral Small",
+                    "availability": "both",
+                    "pricing": {
+                        "unit": "per_token",
+                        "inputCost": "$0.00015 / 1K tokens",
+                        "outputCost": "$0.00060 / 1K tokens"
+                    }
+                },
+                {
+                    "name": "Codestral",
+                    "availability": "paid",
+                    "pricing": {
+                        "unit": "per_token",
+                        "inputCost": "$0.001 / 1K tokens",
+                        "outputCost": "$0.003 / 1K tokens"
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Cohere",
+            "slug": "cohere",
+            "website": "https://cohere.com/",
+            "capabilities": [
+                "api",
+                "sdk"
+            ],
+            "freeTier": {
+                "limits": "Trial API key: 5K generation units/mo, 100 calls/min. Free for prototyping. 1K calls/mo total",
+                "models": [
+                    "Command R",
+                    "Embed v3",
+                    "Rerank 3.5"
+                ]
+            },
+            "paidTier": {
+                "limits": "Production (pay-as-you-go): Command A: $2.50/M in, $10/M out. Command R: $0.15/M, $0.60/M",
+                "models": [
+                    "Command A",
+                    "Command R+",
+                    "Command R",
+                    "Embed 4",
+                    "Rerank 3.5"
+                ]
+            },
+            "notes": "Enterprise-focused. Strong embeddings/rerank. OpenAI-compatible API. Custom models available",
+            "openAICompatible": {
+                "isCompatible": true,
+                "apiKeyPortal": "https://dashboard.cohere.com/",
+                "endpointDocs": "https://docs.cohere.com/docs/openai-compatibility",
+                "supportedModels": [
+                    "command-r",
+                    "command-a",
+                    "embed-multilingual-v3"
+                ]
+            },
+            "models": [
+                {
+                    "name": "Command A",
+                    "availability": "paid",
+                    "pricing": {
+                        "unit": "per_token",
+                        "inputCost": "$0.0025 / 1K tokens",
+                        "outputCost": "$0.0100 / 1K tokens"
+                    }
+                },
+                {
+                    "name": "Command R+",
+                    "availability": "paid",
+                    "pricing": {
+                        "unit": "per_token",
+                        "inputCost": "$0.0015 / 1K tokens",
+                        "outputCost": "$0.0060 / 1K tokens"
+                    }
+                },
+                {
+                    "name": "Embed v3",
+                    "availability": "both",
+                    "pricing": {
+                        "unit": "per_token",
+                        "notes": "5K free generation units per month"
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Cursor",
+            "slug": "cursor",
+            "website": "https://cursor.com/",
+            "capabilities": [
+                "desktop",
+                "ide"
+            ],
+            "freeTier": {
+                "limits": "Hobby: 2K completions/mo, 50 premium requests. 2-week Pro trial",
+                "models": [
+                    "GPT-4.1",
+                    "Claude Sonnet",
+                    "Gemini 2.0"
+                ]
+            },
+            "paidTier": {
+                "limits": "Pro: $20/mo ($20 API credit). Pro+: $60/mo (1500 reqs). Ultra: $200/mo (20x usage)",
+                "models": [
+                    "GPT-4.1",
+                    "Claude Opus 4",
+                    "Gemini 2.5 Pro",
+                    "OpenAI o3",
+                    "Cursor Composer"
+                ]
+            },
+            "notes": "AI-first code editor. Fork of VS Code. Multi-model support. Composer for multi-file edits",
+            "openAICompatible": {
+                "isCompatible": false
+            },
+            "models": [
+                {
+                    "name": "Cursor Pro",
+                    "availability": "paid",
+                    "pricing": {
+                        "unit": "subscription",
+                        "monthlyCost": "$20",
+                        "notes": "Includes $20 API credit"
+                    }
+                },
+                {
+                    "name": "Cursor Hobby",
+                    "availability": "free",
+                    "pricing": {
+                        "unit": "flat",
+                        "notes": "2K completions per month"
+                    }
+                }
+            ]
+        },
+        {
+            "name": "GitHub Copilot",
+            "slug": "github-copilot",
+            "website": "https://github.com/features/copilot",
+            "capabilities": [
+                "ide",
+                "cli",
+                "mobile"
+            ],
+            "freeTier": {
+                "limits": "Free for students, teachers, OSS maintainers",
+                "models": [
+                    "GPT-4.1",
+                    "o3-mini",
+                    "Gemini 2.0"
+                ]
+            },
+            "paidTier": {
+                "limits": "Individual $10/mo. Business $19/user/mo. Enterprise $39/user/mo",
+                "models": [
+                    "GPT-4.1",
+                    "Claude 3.7 Sonnet",
+                    "Gemini 2.5 Pro",
+                    "OpenAI o1",
+                    "o3"
+                ]
+            },
+            "notes": "Microsoft-owned. Best IDE integration. VS Code, JetBrains, etc. Chat in Business+. Popular with enterprises",
+            "openAICompatible": {
+                "isCompatible": false
+            },
+            "models": [
+                {
+                    "name": "Copilot Individual",
+                    "availability": "paid",
+                    "pricing": {
+                        "unit": "subscription",
+                        "monthlyCost": "$10"
+                    }
+                },
+                {
+                    "name": "Copilot Business",
+                    "availability": "paid",
+                    "pricing": {
+                        "unit": "subscription",
+                        "monthlyCost": "$19 per user"
+                    }
+                },
+                {
+                    "name": "Copilot Enterprise",
+                    "availability": "paid",
+                    "pricing": {
+                        "unit": "subscription",
+                        "monthlyCost": "$39 per user"
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Meta Llama",
+            "slug": "meta-llama",
+            "website": "https://ai.meta.com/llama/",
+            "capabilities": [
+                "api",
+                "sdk",
+                "other"
+            ],
+            "freeTier": {
+                "limits": "Open source, free to use. Pricing depends on hosting provider.",
+                "models": [
+                    "Llama 3.1",
+                    "Llama 3",
+                    "Llama 2"
+                ]
+            },
+            "paidTier": {
+                "limits": "Varies by provider (e.g., AWS, Replicate, Groq). Pay-per-use.",
+                "models": [
+                    "Llama 3.1",
+                    "Llama 3",
+                    "Llama 2"
+                ]
+            },
+            "notes": "Open source models from Meta. Can be self-hosted or used via cloud providers.",
+            "openAICompatible": {
+                "isCompatible": false
+            },
+            "models": [
+                {
+                    "name": "Llama 3.1 70B",
+                    "availability": "both",
+                    "pricing": {
+                        "unit": "flat",
+                        "notes": "Usage cost depends on hosting platform"
+                    }
+                },
+                {
+                    "name": "Llama 3 8B",
+                    "availability": "both",
+                    "pricing": {
+                        "unit": "flat",
+                        "notes": "Open source weights available"
+                    }
+                }
+            ]
+        },
+        {
+            "name": "IBM Watsonx",
+            "slug": "ibm-watsonx",
+            "website": "https://www.ibm.com/watsonx",
+            "capabilities": [
+                "api",
+                "sdk",
+                "web_app",
+                "integration"
+            ],
+            "freeTier": {
+                "limits": "Free tier with monthly token and compute hour limits.",
+                "models": [
+                    "Granite",
+                    "Slate",
+                    "Open source models"
+                ]
+            },
+            "paidTier": {
+                "limits": "Pay-as-you-go per million tokens. Subscription plans available.",
+                "models": [
+                    "Granite",
+                    "Slate",
+                    "Open source models"
+                ]
+            },
+            "notes": "Enterprise-focused AI and data platform. Offers a suite of tools for building, scaling, and governing AI.",
+            "openAICompatible": {
+                "isCompatible": false
+            },
+            "models": [
+                {
+                    "name": "Granite 3",
+                    "availability": "paid",
+                    "pricing": {
+                        "unit": "per_token",
+                        "notes": "Pricing varies by IBM Cloud agreement"
+                    }
+                },
+                {
+                    "name": "Watsonx Trial",
+                    "availability": "free",
+                    "pricing": {
+                        "unit": "flat",
+                        "notes": "Includes limited tokens and compute hours"
+                    }
+                }
+            ]
+        },
+        {
+            "name": "AI21 Labs Jurassic",
+            "slug": "ai21-labs-jurassic",
+            "website": "https://www.ai21.com/",
+            "capabilities": [
+                "api",
+                "sdk"
+            ],
+            "freeTier": {
+                "limits": "$10 credit for new users, valid for 3 months.",
+                "models": [
+                    "Jurassic-2 Mid",
+                    "Jurassic-2 Ultra"
+                ]
+            },
+            "paidTier": {
+                "limits": "Pay-as-you-go per token. J2-Mid: $12.5/M tokens, J2-Ultra: $18.8/M tokens.",
+                "models": [
+                    "Jurassic-2 Mid",
+                    "Jurassic-2 Ultra"
+                ]
+            },
+            "notes": "Focus on production-grade NLP APIs.",
+            "openAICompatible": {
+                "isCompatible": false
+            },
+            "models": [
+                {
+                    "name": "Jurassic-2 Mid",
+                    "availability": "both",
+                    "pricing": {
+                        "unit": "per_token",
+                        "inputCost": "$0.0125 / 1K tokens",
+                        "outputCost": "$0.0125 / 1K tokens"
+                    }
+                },
+                {
+                    "name": "Jurassic-2 Ultra",
+                    "availability": "paid",
+                    "pricing": {
+                        "unit": "per_token",
+                        "inputCost": "$0.0188 / 1K tokens",
+                        "outputCost": "$0.0188 / 1K tokens"
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Hugging Face",
+            "slug": "hugging-face",
+            "website": "https://huggingface.co/",
+            "capabilities": [
+                "web_app",
+                "api",
+                "sdk",
+                "integration"
+            ],
+            "freeTier": {
+                "limits": "Free access to models and datasets. Free tier for Spaces.",
+                "models": [
+                    "Vast collection of open source models"
+                ]
+            },
+            "paidTier": {
+                "limits": "PRO account ($9/mo), Team plan ($20/user/mo), Enterprise Hub (from $50/user/mo). Pay-as-you-go for compute.",
+                "models": [
+                    "Vast collection of open source models"
+                ]
+            },
+            "notes": "Platform for hosting and collaborating on ML models, datasets, and applications.",
+            "openAICompatible": {
+                "isCompatible": false
+            },
+            "models": [
+                {
+                    "name": "Inference Endpoints",
+                    "availability": "paid",
+                    "pricing": {
+                        "unit": "flat",
+                        "notes": "Usage billed per compute minute"
+                    }
+                },
+                {
+                    "name": "Spaces",
+                    "availability": "both",
+                    "pricing": {
+                        "unit": "subscription",
+                        "monthlyCost": "$9+",
+                        "notes": "Free tier available with limited hardware"
+                    }
+                }
+            ]
+        }
+    ]
+}
