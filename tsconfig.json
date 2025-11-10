@@ -8,6 +8,10 @@
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
     "strict": true,
+    "resolveJsonModule": true,
+    "types": [
+      "vitest/globals"
+    ],
     "lib": [
       "dom",
       "dom.iterable",
@@ -17,6 +21,7 @@
     ]
   },
   "include": [
-    "ai_providers_db.tsx"
+    "src/**/*",
+    "vitest.config.ts"
   ]
 }
