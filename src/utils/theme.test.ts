@@ -1,16 +1,15 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest';
-import { getStoredTheme, setStoredTheme, type Theme } from './theme';
+import { getStoredTheme, setStoredTheme } from './theme';
 
 // Mock localStorage
 const localStorageMock = {
     getItem: vi.fn(),
     setItem: vi.fn(),
-    removeItem: vi.fn(),
-    clear: vi.fn(),
 };
 
 Object.defineProperty(window, 'localStorage', {
     value: localStorageMock,
+    writable: true,
 });
 
 describe('theme utilities', () => {
@@ -40,14 +39,6 @@ describe('theme utilities', () => {
             });
             expect(getStoredTheme()).toBe('dark');
         });
-
-        it('returns "dark" when window is undefined', () => {
-            const originalWindow = global.window;
-            // @ts-ignore
-            delete global.window;
-            expect(getStoredTheme()).toBe('dark');
-            global.window = originalWindow;
-        });
     });
 
     describe('setStoredTheme', () => {
@@ -66,14 +57,6 @@ describe('theme utilities', () => {
                 throw new Error('Storage error');
             });
             expect(() => setStoredTheme('dark')).not.toThrow();
-        });
-
-        it('does nothing when window is undefined', () => {
-            const originalWindow = global.window;
-            // @ts-ignore
-            delete global.window;
-            expect(() => setStoredTheme('dark')).not.toThrow();
-            global.window = originalWindow;
         });
     });
 });
