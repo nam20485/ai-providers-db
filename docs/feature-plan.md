@@ -2,7 +2,7 @@
 
 ## Summary of Requests
 
-1. Combine the current two provider data sources (`initialData.json`, `batch2.json`) into a single canonical database file.
+1. Maintain a single canonical provider database (`provider-data/providers.json`), superseding the legacy `initialData.json` and `batch2.json` sources.
 2. Ensure capability indicators (Web / API / SDK / etc.) render correctly; if the data is incomplete, augment it with accurate values.
 3. Introduce provider detail views reachable from the main list.
 4. Extend the data model to capture OpenAI compatibility metadata (API key portal link, compatible endpoint URL, compatible model names) and surface it in the UI.
@@ -10,7 +10,7 @@
 
 ## Current State Assessment
 
-- Data is split between `provider-data/initialData.json` (JSON) and `provider-data/batch2.json` (JavaScript object). The app merges them at runtime and caches in `window.storage`.
+- Data has been consolidated into `provider-data/providers.json`; the former `initialData.json` and `batch2.json` files have been retired.
 - Capability badges are generated from the `client_types` array and styled client-side; no explicit boolean flags exist.
 - The UI is a single-page React component rendered via `createRoot` and bundled with esbuild. There is no routing or detail view.
 - The `ProviderData` TypeScript interface lacks OpenAI compatibility metadata, model pricing breakdowns, and explicit structure for per-model pricing.
@@ -57,14 +57,12 @@
 
 ## Implementation Steps
 
-1. **Data Consolidation**
-   - Merge `initialData.json` and `batch2.json` into `provider-data/providers.json` following the new schema.
-   - Deduplicate providers by canonical slug. Prefer the entry from `batch2.json` when conflicts arise, but merge in non-empty fields from `initialData.json` to avoid regressions.
-   - When field values differ, prioritize structured data (arrays/objects) over free-form strings and record discrepancies in a temporary migration log for manual review.
-   - Update build script to copy the single file.
-   - Remove legacy files and parsing logic.
+1. **Data Consolidation** *(Completed – unified dataset shipped November 2025)*
+   - `provider-data/providers.json` now serves as the canonical dataset; the former `initialData.json` and `batch2.json` sources have been removed from the build.
+   - During the original migration, the two legacy files were merged into the unified schema with conflict resolution favoring structured fields and canonical slugs.
+   - Update scripts should continue copying only the unified file and keep legacy parsing paths deleted.
    - Generate provider slugs using a deterministic kebab-case transform of the provider name. Allow an optional `slugOverride` field in data to handle collisions or non-Latin names.
-   - If a slug cannot be derived or conflicts remain after overrides, block the merge and surface the issue in the migration log rather than silently skipping the provider.
+   - If a slug cannot be derived or conflicts emerge in future imports, block the merge and surface the issue in the migration log rather than silently skipping the provider.
 
 2. **Type and Loader Updates**
    - Update TypeScript interfaces for the new data shape.

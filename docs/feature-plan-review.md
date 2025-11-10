@@ -11,7 +11,7 @@
 - Comprehensive testing checklist covering UI functionality and build validation.
 
 ## Clarifications & Risks
-- **Data consolidation**: Document how conflicts will be handled when merging `initialData.json` and `batch2.json` (duplicate providers, differing fields, slug generation).
+- **Data consolidation**: Document how conflicts were handled when migrating from the legacy `initialData.json`/`batch2.json` sources to the unified `provider-data/providers.json` file (duplicate providers, differing fields, slug generation).
 - **Capability normalization**: Define the canonical capability keys/labels up front to validate merged data and simplify badge rendering.
 - **Routing and slugs**: Specify how provider slugs are generated and what fallback exists if a slug cannot be derived.
 - **OpenAI compatibility**: Require `supportedModels` details whenever `isCompatible` is true to prevent empty compatibility sections.
